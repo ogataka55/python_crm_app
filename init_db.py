@@ -121,6 +121,7 @@ def update_user(new_name, new_age, name):
     connection.close()
 
 
+# バリデート関数
 def validate(name, age):
     if name == "":
         print(f"User name can't be blank")
@@ -160,25 +161,8 @@ def main():
         elif command.upper() == "A":
             name = input("New user name > ")
             age = input("New user age > ")
+            # バリデート処理
             validate(name, age)
-            # name = input("New user name > ")
-            # age = input("New user age > ")
-            # # バリデーション
-            # while True:
-            #     if name == "":
-            #         print(f"User name can't be blank")
-            #         break
-            #     elif age == "":
-            #         print(f"User age can't be blank")
-            #         break
-            #     elif len(name) >= 21:
-            #         print(f"User name is too long(maximum is 20 characters)")
-            #         break
-            #         # 文字列（浮動小数点) -> エラー… int(float())で回避
-            #     elif int(float(age)) > 120 or int(float(age)) < 0:
-            #         print(f"Age is grater than 0 less than 120")
-            #         break
-            #     else:
             # 例外処理(try-except文)… エラーをキャッチして事前処理
             try:
                 register_user(name, age)
