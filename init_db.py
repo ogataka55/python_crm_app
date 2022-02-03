@@ -125,13 +125,19 @@ def update_user(new_name, new_age, name):
 def validate(name, age):
     if name == "":
         print(f"User name can't be blank")
+        return False
     elif age == "":
         print(f"User age can't be blank")
+        return False
     elif len(name) >= 21:
         print(f"User name is too long(maximum is 20 characters)")
+        return False
     # 文字列（浮動小数点) -> エラー… int(float())で回避
     elif int(float(age)) > 120 or int(float(age)) < 0:
         print(f"Age is grater than 0 less than 120")
+        return False
+    else:
+        return True
 
 
 def main():
@@ -162,16 +168,16 @@ def main():
             name = input("New user name > ")
             age = input("New user age > ")
             # バリデート処理
-            validate(name, age)
             # 例外処理(try-except文)… エラーをキャッチして事前処理
-            try:
-                register_user(name, age)
-            except psycopg2.errors.UniqueViolation:  # except エラー名:
-                print(f"Duplicated user name {name}")
-            except psycopg2.errors.InvalidTextRepresentation:  # except エラー名:
-                print(f"Age is not positive integer")
-            else:
-                print(f"Add new user: {name}")
+            if validate(name, age):
+                try:
+                    register_user(name, age)
+                except psycopg2.errors.UniqueViolation:  # except エラー名:
+                    print(f"Duplicated user name {name}")
+                except psycopg2.errors.InvalidTextRepresentation:  # except エラー名:
+                    print(f"Age is not positive integer")
+                else:
+                    print(f"Add new user: {name}")
         # ユーザ検索機能追加
         elif command.upper() == "F":
             name = input("User name > ")
